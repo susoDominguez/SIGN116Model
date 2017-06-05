@@ -1,0 +1,140 @@
+@prefix : <http://anonymous.org/data/> .
+@prefix vocab: <http://anonymous.org/vocab/> .
+@prefix vocab4i: <http://anonymous.org/vocab4i/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+@prefix data: <http://anonymous.org/data/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#    Action Types
+:ActExercise  rdf:type vocab:DrugAdministrationType;
+                            rdfs:label "Perform exercise"@en .
+
+:PredDM1 rdf:type vocab:PredicateType;
+        rdfs:label              "DM 1" .
+
+:PredDM2 rdf:type vocab:PredicateType;
+        rdfs:label              "DM 2" .
+
+:PredComplications rdf:type vocab:PredicateType;
+        rdfs:label              "Complications" .
+
+:PredMedicalReview rdf:type vocab:PredicateType;
+        rdfs:label              "Medical review" .
+
+:PCNoMedReview rdf:type vocab:PreconditionType;
+        rdfs:label              "No medical review"@en ;
+        vocab:neg               :PredMedicalReview.
+
+:PCComplicationsAndNoMedicalReview rdf:type vocab:PreconditionType;
+        rdfs:label              "Has existing complications and did not have medical review"@en ;
+        vocab:and               :PCNoMedReview;
+        vocab:and               :PredComplications.
+
+
+#    Transition Types
+:TrExerciseType1 rdf:type vocab:TransitionType;
+                    vocab:hasFilterSituation    :SitType1 ; 
+                    vocab:hasTransformableSituation :SitIncreasedCardiovascularRisks ;
+                    vocab:hasExpectedSituation :SitReducedCardiovascularRisks .
+
+:SitIncreasedCardiovascularRisks rdf:type vocab:SituationType;
+        rdfs:label              "Cardiovascular risk is increased"@en .
+
+:SitReducedCardiovascularRisks rdf:type vocab:SituationType;
+        rdfs:label              "Cardiovascular risk is reduced"@en .
+
+#    Transition Types
+:TrExerciseType2 rdf:type vocab:TransitionType;
+                    vocab:hasTransformableSituation :SitPoorGlycaemicControlAndCardiovascularRisks ;
+                    vocab:hasExpectedSituation :SitGoodGlycaemicControlAndCardiovascularRisks .
+
+:SitPoorGlycaemicControlAndCardiovascularRisks rdf:type vocab:SituationType;
+        rdfs:label              "Cardiovascular risk and glycaemic control is poor"@en .
+
+:SitGoodGlycaemicControlAndCardiovascularRisks rdf:type vocab:SituationType;
+        rdfs:label              "Cardiovascular risk and glycaemic control is good"@en .
+
+#    Transition Types
+:TrExerciseInsulinDeficiency rdf:type vocab:TransitionType;
+                    vocab:hasTransformableSituation :SitGoodBloodGlucose ;
+                    vocab:hasExpectedSituation :SitHyperglycaemia .
+
+:SitGoodBloodGlucose rdf:type vocab:SituationType;
+        rdfs:label              "Blood glucose is good"@en .
+
+:SitHyperglycaemia rdf:type vocab:SituationType;
+        rdfs:label              "Blood glucose is high"@en .
+
+# causation belief
+data:CBExercise3 {
+    data:ActExercise
+        vocab:causes                  data:TrExerciseInsulinDeficiency .
+    data:CBExercise3
+        a                             vocab:CausationBelief ;
+        vocab:strength                "L2"^^xsd:string;
+        vocab:frequency               "always"^^xsd:string.
+}
+
+# causation belief
+data:CBExercise2 {
+    data:ActExercise
+        vocab:causes                  data:TrExerciseType2 .
+    data:CBExercise2
+        a                             vocab:CausationBelief ;
+        vocab:strength                "L2"^^xsd:string;
+        vocab:frequency               "always"^^xsd:string.
+}
+
+# causation belief
+data:CBExercise1 {
+    data:ActExercise
+        vocab:causes                  data:TrExerciseType1 .
+    data:CBExercise1
+        a                             vocab:CausationBelief ;
+        vocab:strength                "L2"^^xsd:string;
+        vocab:frequency               "always"^^xsd:string.
+}
+## Guideline
+:CIG-DB
+        rdf:type vocab:ClinicalGuideline ;
+        rdfs:label "CIG for Diabetes Mellitus"@en .
+
+## Recommendation
+:RecDB-ExerciseB1 {
+    :RecDB-ExerciseB1
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PredDM1 ;
+        rdfs:label                    "Type 1 should exercise regularly"@en ;
+        vocab:strength                "should"^^xsd:string ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActExercise;
+        vocab:basedOn                 :CBExercise1 .
+}
+
+
+## Recommendation
+:RecDB-ExerciseB2 {
+    :RecDB-ExerciseB2
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PredDM2 ;
+        rdfs:label                    "Type 2 should exercise regularly"@en ;
+        vocab:strength                "should"^^xsd:string ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActExercise;
+        vocab:basedOn                 :CBExercise2 .
+}
+
+## Recommendation
+:RecDB-ExerciseB3 {
+    :RecDB-ExerciseB3
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PCComplicationsAndNoMedicalReview ;
+        rdfs:label                    "No exercise with complications and no medical review"@en ;
+        vocab:strength                "should-not"^^xsd:string ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActExercise;
+        vocab:basedOn                 :CBExercise3 .
+}

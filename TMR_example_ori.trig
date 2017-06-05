@@ -1,0 +1,62 @@
+@prefix : <http://anonymous.org/vocab/temporalVocab/> .
+@prefix vocab: <http://anonymous.org/vocab/> .
+@prefix vocab4i: <http://anonymous.org/vocab4i/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+@prefix data: <http://anonymous.org/data/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+#    Drug Types
+:DrugTAspirin rdf:type vocab:DrugType, owl:NamedIndividual ;
+                rdfs:label "Aspirin"@en .
+
+
+#    Action Types
+:ActAdministerAspirin  rdf:type vocab:DrugAdministrationType, owl:NamedIndividual ;
+                            rdfs:label "Administer Aspirin"@en ;
+                            vocab:administrationOf :DrugTAspirin .
+
+
+#    Situtation Types
+:SitDUHealed rdf:type vocab:SituationType, owl:NamedIndividual ;
+             rdfs:label     "Ulcer is healed"@en ;
+             vocab:umlsCode   "C1265810"^^xsd:string ; #  Healed ulcer
+             vocab:umlsCode   "C0400814"^^xsd:string . #  Healed gastric ulcer ???
+
+
+#    Transition Types
+:TrIncreaseRiskGIB rdf:type vocab:TransitionType, owl:NamedIndividual ;
+                    vocab:hasFilterSituation :Sit????? ;
+                    vocab:hasTransformableSituation :SitLowRiskGIB ;
+                    vocab:hasExpectedSituation :SitHighRiskGIB .
+
+
+# causation belief
+data:CBAspirinGIB {
+    data:ActAdministerAspirin
+        vocab:causes                  data:TrIncreaseRiskGIB .
+    data:CBAspirinGIB
+        a                             vocab:CausationBelief ;
+        vocab:strength                "L1"^^xsd:string;
+        vocab:frequency               "always"^^xsd:string.
+}
+
+## Guideline
+:CIG-DB
+        rdf:type vocab:ClinicalGuideline ;
+        rdfs:label "CIG for Diabetes Mellitus"@en .
+
+
+## Recommendation
+:RecDB-AntiThrombotic1 {
+    :RecDB-AntiThrombotic1
+        a                             vocab:ClinicalRecommendation ;
+        rdfs:label                    "Avoid thrombi"@en ;
+        vocab:strength                "should"^^xsd:string ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActAdministerNSAID;
+        vocab:basedOn                 :CBAspirinGIB .
+}

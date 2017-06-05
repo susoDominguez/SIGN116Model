@@ -1,0 +1,76 @@
+@prefix : <http://anonymous.org/data/> .
+@prefix vocab: <http://anonymous.org/vocab/> .
+@prefix vocab4i: <http://anonymous.org/vocab4i/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+@prefix data: <http://anonymous.org/data/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:PredAge40AndUp rdf:type vocab:PredicateType;
+        rdfs:label              "Age 40+" .
+:PredAge40AndLess rdf:type vocab:PredicateType;
+        rdfs:label              "Age 40-" .
+:PredAge12AndUp rdf:type vocab:PredicateType;
+        rdfs:label              "Age 12+" .
+:PCNeg12AndUp rdf:type vocab:PreconditionType;
+        rdfs:label              "Not age 12+"@en ;
+        vocab:neg                :PredAge12AndUp.
+:PCNeg40AndUp rdf:type vocab:PreconditionType;
+        rdfs:label              "Not age 40+"@en ;
+        vocab:neg                :PredAge40AndUp.
+:PCNeg40AndLess rdf:type vocab:PreconditionType;
+        rdfs:label              "Not age 40-"@en ;
+        vocab:neg                :PredAge40AndLess.
+:PredDM1 rdf:type vocab:PredicateType;
+        rdfs:label              "DM 1" .
+:PredDM2 rdf:type vocab:PredicateType;
+        rdfs:label              "DM 2" .
+
+#~(*( 40+, 40-)
+:PCAge40AndUpAndAge40AndLess rdf:type vocab:PreconditionType;
+        rdfs:label              "Age 40+ and age 40-"@en ;
+        vocab:and               :PredAge40AndUp;
+        vocab:and               :PredAge40AndLess.
+:PCNotAge40AndUpAndAge40AndLess rdf:type vocab:PreconditionType;
+        rdfs:label              "Not( age 40+ and age 40-)"@en ;
+        vocab:neg               :PCAge40AndUpAndAge40AndLess.
+
+#~(*( ~40+, ~40-)
+:PCNotAge40AndUpAndNotAge40AndLess rdf:type vocab:PreconditionType;
+        rdfs:label              "~40+ and ~40-"@en ;
+        vocab:and               :PCNeg40AndUp;
+        vocab:and               :PCNeg40AndLess.
+:PCNotNotAge40AndUpAndNotAge40AndLess rdf:type vocab:PreconditionType;
+        rdfs:label              "Not(~40+ and ~40-)"@en ;
+        vocab:neg               :PCNotAge40AndUpAndNotAge40AndLess.
+
+# ~(*(~12+, 40+))
+:PCNeg12AndUpAnd40AndLess rdf:type vocab:PreconditionType;
+        rdfs:label              "*(~12+, 40-)"@en ;
+        vocab:and                :PCNeg12AndUp;
+        vocab:and                :PredAge40AndLess.
+:PCNegNeg12AndUpAnd40AndLess rdf:type vocab:PreconditionType;
+        rdfs:label              "~(*(~12+, 40+))"@en ;
+        vocab:neg               :PCNeg12AndUpAnd40AndLess.
+
+# ~(*(DM1, DM2))
+:PCNotDM1AndDM2 {
+    :PCNotDM1AndDM2 rdf:type vocab:PreconditionType;
+            rdfs:label              "Not (DM1 and DM2)"@en ;
+            vocab:neg                :PCDM1AndDM2.
+    :PCDM1AndDM2 rdf:type vocab:PreconditionType;
+            rdfs:label              "DM1 and DM2"@en ;
+            vocab:and                :PredDM1;
+            vocab:and                :PredDM2.
+}
+
+:PCKnowledgeBase {
+    :PCKnowledgeBase rdf:type vocab:PreconditionType;
+            rdfs:label              "Knowledge base"@en ;
+            vocab:and                :PCNotAge40AndUpAndAge40AndLess;
+            vocab:and                :PCNotNotAge40AndUpAndNotAge40AndLess;
+            vocab:and                :PCNegNeg12AndUpAnd40AndLess;
+            vocab:and                :PCNotDM1AndDM2.
+}

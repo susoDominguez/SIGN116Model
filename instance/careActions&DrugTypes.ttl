@@ -1,0 +1,75 @@
+@prefix :      <http://anonymous.org/data/> .
+@prefix np:    <http://www.nanopub.org/nschema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix swrl:  <http://www.w3.org/2003/11/swrl#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix oa:    <http://www.w3.org/ns/oa#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix vocab: <http://anonymous.org/vocab/> .
+@prefix nanopub: <http://www.nanopub.org/nschema#> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+
+#    Action Types
+:DrugTPiaglitazone  a     vocab:DrugType , owl:NamedIndividual ;
+                          rdfs:label    "piaglitazone"@en . 
+
+:DrugTMetformin  a     vocab:DrugType , owl:NamedIndividual ;
+                          rdfs:label    "metformin"@en . 
+
+:DrugTSulphonylureas  a     vocab:DrugType , owl:NamedIndividual ;
+                          rdfs:label    "sulphonylureas"@en . 
+
+
+:ActAdministerPiaglitazone  rdf:type vocab:DrugAdministrationType;
+                            rdfs:label "Administer piaglitazone"@en ;
+                            vocab:administrationOf  :DrugTPiaglitazone .
+
+:ActAdministerMetformin  rdf:type vocab:DrugAdministrationType;
+                         rdfs:label "Administer metformin"@en ;
+                         vocab:administrationOf  :DrugTMetformin .
+                         
+:ActAdministerSulphonylureas  rdf:type vocab:DrugAdministrationType ;
+                            rdfs:label "Administer sulphonylureas"@en ;
+                            vocab:administrationOf  :DrugTSulphonylureas .
+
+:PredDM2 rdf:type vocab:PredicateType;
+        rdfs:label              "DM 2" .
+:PredHeartFailure rdf:type vocab:PredicateType;
+        rdfs:label              "Heart failure" .
+:PredIntenseInsulinTherapy rdf:type vocab:PredicateType;
+        rdfs:label              "Intense insulin therapy" .
+:PredOverweight rdf:type vocab:PredicateType;
+        rdfs:label              "Overweight" .
+:PredContraindicationsForMetformin rdf:type vocab:PredicateType;
+        rdfs:label              "Contraindications for metformin" .
+:PredMetforminTherapy rdf:type vocab:PredicateType;
+        rdfs:label              "Metformin therapy" .
+:PredSulphonylureasTherapy rdf:type vocab:PredicateType;
+        rdfs:label              "Sulphonylureas therapy" .
+:PredIntolerantForMetformin rdf:type vocab:PredicateType;
+        rdfs:label              "Intolerant for metformin" .
+:PredIntolerantForSulphonylureas rdf:type vocab:PredicateType;
+        rdfs:label              "Intolerant for sulphonylureas" .
+
+:PCType2AndOverweight rdf:type vocab:PreconditionType;
+        rdfs:label              "Has DM type 2 and is overweight"@en ;
+        vocab:and                :PredDM2;
+        vocab:and                :PredOverweight.
+
+:PCNotOverweight rdf:type vocab:PreconditionType;
+        rdfs:label              "Not overweight"@en ;
+        vocab:neg                :PredOverweight.
+
+:PCNotOverweightOrIntolerantOrContraindications rdf:type vocab:PreconditionType;
+        rdfs:label             "Not overweight or has contraindications or intolerance for metformin"@en ;
+        vocab:or               :PCNotOverweight ;
+        vocab:or               :PredIntolerantForMetformin;
+        vocab:or               :PredContraindicationsForMetformin.
+
+:PCMetforminAndSulphonylureasTherapy rdf:type vocab:PreconditionType;
+        rdfs:label             "Metformin and sulphonylureas therapy"@en ;
+        vocab:and               :PredMetforminTherapy ;
+        vocab:and               :PredSulphonylureasTherapy.

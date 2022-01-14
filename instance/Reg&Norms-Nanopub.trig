@@ -11,3 +11,354 @@
 @prefix vocab: <http://anonymous.org/vocab/> .
 @prefix nanopub: <http://www.nanopub.org/nschema#> .
 @prefix prov:  <http://www.w3.org/ns/prov#> .
+
+## Guideline
+:CIG-DB
+        rdf:type vocab:ClinicalGuideline, owl:NamedIndividual ;
+        rdfs:label "CIG for Diabetes Mellitus"@en .
+
+## Subguidelines
+:RecDB-Thiazolidinediones1
+        vocab:isPartOf  :CIG-DB .
+
+:RecDB-Thiazolidinediones2
+        vocab:isPartOf  :CIG-DB .
+
+:RecDM-Thiazolidinediones3a  vocab:isPartOf  :CIG-DB .
+
+:RecDM-Thiazolidinediones3b  vocab:isPartOf  :CIG-DB .
+
+:RecDM-Thiazolidinediones3c  vocab:isPartOf  :CIG-DB .
+
+:RecDM-Thiazolidinediones3c  vocab:isPartOf  :CIG-DB .
+
+:RecDM-Thiazolidinediones3e  vocab:isPartOf  :CIG-DB .
+
+:RecDM-Thiazolidinediones4  vocab:isPartOf  :CIG-DB .
+
+:RecDM-Thiazolidinediones5  vocab:isPartOf  :CIG-DB .
+
+## Recommendation
+:RecDB-Thiazolidinediones1 {
+    :RecDB-Thiazolidinediones1
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PCType2AndOverweight ;
+        rdfs:label                    "Metformin with DM2 and overweight"@en ;
+        vocab:strength                "should" ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActAdministerMetformin;
+        vocab:basedOn                 :CBMetformin .
+
+        :CBMetformin vocab:contribution  "positive" .
+}
+
+:RecDB-Thiazolidinediones2 {
+    :RecDB-Thiazolidinediones2
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PCNotOverweightOrIntolerantOrContraindications ;
+        rdfs:label                    "Sulphonylureas if not overweight, or intolerant or contraindications for metformin"@en ;
+        vocab:strength                "should" ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActAdministerSulphonylureas;
+        vocab:basedOn                 :CBSulphonylureas .
+
+        :CBSulphonylureas vocab:contribution  "positive" .
+}
+
+:RecDB-Thiazolidinediones3a {
+    :RecDB-Thiazolidinediones3a
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PCMetforminAndSulphonylureasTherapy; 
+        rdfs:label                    "Pioglitazone can be added to metformin and sulphonylureas therapy"@en ;
+        vocab:strength                "should" ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActAdministerPiaglitazone;
+        vocab:basedOn                 :CBPiaglitazone .
+
+        :CBPiaglitazone vocab:contribution  "positive" .
+}
+
+:RecDB-Thiazolidinediones3b {
+    :RecDB-Thiazolidinediones3b
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PredIntolerantForMetformin ; 
+        rdfs:label                    "Use pioglitazone if intolerant for metformin"@en ;
+        vocab:strength                "should" ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActAdministerPiaglitazone;
+        vocab:basedOn                 :CBPiaglitazone .
+
+        :CBPiaglitazone vocab:contribution  "positive" .
+}
+
+:RecDB-Thiazolidinediones3c {
+    :RecDB-Thiazolidinediones3c
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PredIntolerantForSulphonylureas ; 
+        rdfs:label                    "Use pioglitazone if intolerant for sulphonylureas"@en ;
+        vocab:strength                "should" ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActAdministerPiaglitazone;
+        vocab:basedOn                 :CBPiaglitazone .
+
+        :CBPiaglitazone vocab:contribution  "positive" .
+}
+
+:RecDB-Thiazolidinediones3c {
+    :RecDB-Thiazolidinediones3c
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PredIntolerantForSulphonylureas ; 
+        rdfs:label                    "Stop sulphonylureas, if intolerant"@en ;
+        vocab:strength                "should-not"^^xsd:string ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActAdministerSulphonylureas;
+        vocab:basedOn                 :CBSulphonylureasIntolerance .
+
+        :CBSulphonylureasIntolerance vocab:contribution  "negative" .
+}
+
+:RecDB-Thiazolidinediones3e {
+    :RecDB-Thiazolidinediones3e
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PredIntolerantForMetformin ; 
+        rdfs:label                    "Stop metformin, if intolerant"@en ;
+        vocab:strength                "should-not"^^xsd:string ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActAdministerMetformin;
+        vocab:basedOn                 :CBMetforminIntolerance .
+
+        :CBMetforminIntolerance vocab:contribution  "negative" .
+}
+
+:RecDB-Thiazolidinediones4 {
+    :RecDB-Thiazolidinediones4
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PredHeartFailure ; 
+        rdfs:label                    "No piaglitazone if heart failure"@en ;
+        vocab:strength                "should-not"^^xsd:string ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActAdministerPiaglitazone;
+        vocab:basedOn                 :CBPiaglitazoneHeartFailure .
+
+        :CBPiaglitazoneHeartFailure vocab:contribution  "negative" .
+}
+
+:RecDB-Thiazolidinediones5 {
+    :RecDB-Thiazolidinediones5
+        a                             vocab:ClinicalRecommendation ;
+        vocab:hasFilterSituation      :PredIntenseInsulinTherapy ;
+        rdfs:label                    "With intensive insulin therapy, stop sulphonylurea"@en ;
+        vocab:strength                "should-not"^^xsd:string ;
+        vocab:partOf                  :CIG-DB ;
+        vocab:aboutExecutionOf        :ActAdministerSulphonylureas;
+        vocab:basedOn                 :CBSulphonylureas .
+
+        :CBSulphonylureas vocab:contribution  "negative" .
+}
+
+:RecDB-Thiazolidinediones1_head {
+    :RecDB-Thiazolidinediones1_head
+            a                           nanopub:Nanopublication ;
+            nanopub:hasAssertion        :RecDB-Thiazolidinediones1 ;
+            nanopub:hasProvenance       :RecDB-Thiazolidinediones1_provenance ;
+            nanopub:hasPublicationInfo  :RecDB-Thiazolidinediones1_publicationinfo .
+}
+
+:RecDB-Thiazolidinediones1_provenance {
+    :RecDB-Thiazolidinediones1  prov:wasDerivedFrom  <http://hdl.handle.net/10222/43703> .
+    
+    :RecDB-Thiazolidinediones1_provenance
+            a             oa:Annotation ;
+            oa:hasBody    :RecDB-Thiazolidinediones1 ;
+            oa:hasTarget  [ oa:hasSource  <http://hdl.handle.net/10222/43703> ] .
+}
+
+:RecDB-Thiazolidinediones1_publicationinfo {
+    :RecDB-Thiazolidinediones1_head
+            prov:generatedAtTime  "2015-10-01"^^xsd:dateTime ;
+            prov:wasAttributedTo  :JD .
+}
+
+:RecDB-Thiazolidinediones2_head {
+    :RecDB-Thiazolidinediones2_head
+            a                           nanopub:Nanopublication ;
+            nanopub:hasAssertion        :RecDB-Thiazolidinediones2 ;
+            nanopub:hasProvenance       :RecDB-Thiazolidinediones2_provenance ;
+            nanopub:hasPublicationInfo  :RecDB-Thiazolidinediones2_publicationinfo .
+}
+
+:RecDB-Thiazolidinediones2_provenance {
+    :RecDB-Thiazolidinediones2  prov:wasDerivedFrom  <http://hdl.handle.net/10222/43703> .
+    
+    :RecDB-Thiazolidinediones2_provenance
+            a             oa:Annotation ;
+            oa:hasBody    :RecDB-Thiazolidinediones2 ;
+            oa:hasTarget  [ oa:hasSource  <http://hdl.handle.net/10222/43703> ] .
+}
+
+:RecDB-Thiazolidinediones2_publicationinfo {
+    :RecDB-Thiazolidinediones2_head
+            prov:generatedAtTime  "2015-10-01"^^xsd:dateTime ;
+            prov:wasAttributedTo  :JD .
+}
+
+:RecDB-Thiazolidinediones3a_head {
+    :RecDB-Thiazolidinediones3a_head
+            a                           nanopub:Nanopublication ;
+            nanopub:hasAssertion        :RecDB-Thiazolidinediones3a ;
+            nanopub:hasProvenance       :RecDB-Thiazolidinediones3a_provenance ;
+            nanopub:hasPublicationInfo  :RecDB-Thiazolidinediones3a_publicationinfo .
+}
+
+:RecDB-Thiazolidinediones3a_provenance {
+    :RecDB-Thiazolidinediones3a  prov:wasDerivedFrom  <http://hdl.handle.net/10222/43703> .
+    
+    :RecDB-Thiazolidinediones3a_provenance
+            a             oa:Annotation ;
+            oa:hasBody    :RecDB-Thiazolidinediones3a ;
+            oa:hasTarget  [ oa:hasSource  <http://hdl.handle.net/10222/43703> ] .
+}
+
+:RecDB-Thiazolidinediones3a_publicationinfo {
+    :RecDB-Thiazolidinediones3a_head
+            prov:generatedAtTime  "2015-10-01"^^xsd:dateTime ;
+            prov:wasAttributedTo  :JD .
+}
+
+:RecDB-Thiazolidinediones3b_head {
+    :RecDB-Thiazolidinediones3b_head
+            a                           nanopub:Nanopublication ;
+            nanopub:hasAssertion        :RecDB-Thiazolidinediones3b ;
+            nanopub:hasProvenance       :RecDB-Thiazolidinediones3b_provenance ;
+            nanopub:hasPublicationInfo  :RecDB-Thiazolidinediones3b_publicationinfo .
+}
+
+:RecDB-Thiazolidinediones3b_provenance {
+    :RecDB-Thiazolidinediones3b  prov:wasDerivedFrom  <http://hdl.handle.net/10222/43703> .
+    
+    :RecDB-Thiazolidinediones3b_provenance
+            a             oa:Annotation ;
+            oa:hasBody    :RecDB-Thiazolidinediones3b ;
+            oa:hasTarget  [ oa:hasSource  <http://hdl.handle.net/10222/43703> ] .
+}
+
+:RecDB-Thiazolidinediones3b_publicationinfo {
+    :RecDB-Thiazolidinediones3b_head
+            prov:generatedAtTime  "2015-10-01"^^xsd:dateTime ;
+            prov:wasAttributedTo  :JD .
+}
+
+:RecDB-Thiazolidinediones3c_head {
+    :RecDB-Thiazolidinediones3c_head
+            a                           nanopub:Nanopublication ;
+            nanopub:hasAssertion        :RecDB-Thiazolidinediones3c ;
+            nanopub:hasProvenance       :RecDB-Thiazolidinediones3c_provenance ;
+            nanopub:hasPublicationInfo  :RecDB-Thiazolidinediones3c_publicationinfo .
+}
+
+:RecDB-Thiazolidinediones3c_provenance {
+    :RecDB-Thiazolidinediones3c  prov:wasDerivedFrom  <http://hdl.handle.net/10222/43703> .
+    
+    :RecDB-Thiazolidinediones3c_provenance
+            a             oa:Annotation ;
+            oa:hasBody    :RecDB-Thiazolidinediones3c ;
+            oa:hasTarget  [ oa:hasSource  <http://hdl.handle.net/10222/43703> ] .
+}
+
+:RecDB-Thiazolidinediones3c_publicationinfo {
+    :RecDB-Thiazolidinediones3c_head
+            prov:generatedAtTime  "2015-10-01"^^xsd:dateTime ;
+            prov:wasAttributedTo  :JD .
+}
+
+:RecDB-Thiazolidinediones3d_head {
+    :RecDB-Thiazolidinediones3d_head
+            a                           nanopub:Nanopublication ;
+            nanopub:hasAssertion        :RecDB-Thiazolidinediones3d ;
+            nanopub:hasProvenance       :RecDB-Thiazolidinediones3d_provenance ;
+            nanopub:hasPublicationInfo  :RecDB-Thiazolidinediones3d_publicationinfo .
+}
+
+:RecDB-Thiazolidinediones3d_provenance {
+    :RecDB-Thiazolidinediones3d  prov:wasDerivedFrom  <http://hdl.handle.net/10222/43703> .
+    
+    :RecDB-Thiazolidinediones3d_provenance
+            a             oa:Annotation ;
+            oa:hasBody    :RecDB-Thiazolidinediones3d ;
+            oa:hasTarget  [ oa:hasSource  <http://hdl.handle.net/10222/43703> ] .
+}
+
+:RecDB-Thiazolidinediones3d_publicationinfo {
+    :RecDB-Thiazolidinediones3d_head
+            prov:generatedAtTime  "2015-10-01"^^xsd:dateTime ;
+            prov:wasAttributedTo  :JD .
+}
+
+:RecDB-Thiazolidinediones3e_head {
+    :RecDB-Thiazolidinediones3e_head
+            a                           nanopub:Nanopublication ;
+            nanopub:hasAssertion        :RecDB-Thiazolidinediones3e ;
+            nanopub:hasProvenance       :RecDB-Thiazolidinediones3e_provenance ;
+            nanopub:hasPublicationInfo  :RecDB-Thiazolidinediones3e_publicationinfo .
+}
+
+:RecDB-Thiazolidinediones3e_provenance {
+    :RecDB-Thiazolidinediones3e  prov:wasDerivedFrom  <http://hdl.handle.net/10222/43703> .
+    
+    :RecDB-Thiazolidinediones3e_provenance
+            a             oa:Annotation ;
+            oa:hasBody    :RecDB-Thiazolidinediones3e ;
+            oa:hasTarget  [ oa:hasSource  <http://hdl.handle.net/10222/43703> ] .
+}
+
+:RecDB-Thiazolidinediones3e_publicationinfo {
+    :RecDB-Thiazolidinediones3e_head
+            prov:generatedAtTime  "2015-10-01"^^xsd:dateTime ;
+            prov:wasAttributedTo  :JD .
+}
+
+:RecDB-Thiazolidinediones4_head {
+    :RecDB-Thiazolidinediones4_head
+            a                           nanopub:Nanopublication ;
+            nanopub:hasAssertion        :RecDB-Thiazolidinediones4 ;
+            nanopub:hasProvenance       :RecDB-Thiazolidinediones4_provenance ;
+            nanopub:hasPublicationInfo  :RecDB-Thiazolidinediones4_publicationinfo .
+}
+
+:RecDB-Thiazolidinediones4_provenance {
+    :RecDB-Thiazolidinediones4  prov:wasDerivedFrom  <http://hdl.handle.net/10222/43703> .
+    
+    :RecDB-Thiazolidinediones4_provenance
+            a             oa:Annotation ;
+            oa:hasBody    :RecDB-Thiazolidinediones4 ;
+            oa:hasTarget  [ oa:hasSource  <http://hdl.handle.net/10222/43703> ] .
+}
+
+:RecDB-Thiazolidinediones4_publicationinfo {
+    :RecDB-Thiazolidinediones4_head
+            prov:generatedAtTime  "2015-10-01"^^xsd:dateTime ;
+            prov:wasAttributedTo  :JD .
+}
+
+:RecDB-Thiazolidinediones5_head {
+    :RecDB-Thiazolidinediones5_head
+            a                           nanopub:Nanopublication ;
+            nanopub:hasAssertion        :RecDB-Thiazolidinediones5 ;
+            nanopub:hasProvenance       :RecDB-Thiazolidinediones5_provenance ;
+            nanopub:hasPublicationInfo  :RecDB-Thiazolidinediones5_publicationinfo .
+}
+
+:RecDB-Thiazolidinediones5_provenance {
+    :RecDB-Thiazolidinediones5  prov:wasDerivedFrom  <http://hdl.handle.net/10222/43703> .
+    
+    :RecDB-Thiazolidinediones5_provenance
+            a             oa:Annotation ;
+            oa:hasBody    :RecDB-Thiazolidinediones5 ;
+            oa:hasTarget  [ oa:hasSource  <http://hdl.handle.net/10222/43703> ] .
+}
+
+:RecDB-Thiazolidinediones5_publicationinfo {
+    :RecDB-Thiazolidinediones5_head
+            prov:generatedAtTime  "2015-10-01"^^xsd:dateTime ;
+            prov:wasAttributedTo  :JD .
+}

@@ -19,24 +19,60 @@
 
 ## Subguidelines
 :RecDB-Thiazolidinediones1
-        vocab:isPartOf  :CIG-DB .
+        vocab:isPartOf  :CIG-DB, :subCIG-Metmorfin.
+
+:subCIG-Metmorfin  a    owl:NamedIndividual , vocab:subGuideline ;
+        rdfs:label              "treatment pathway for patients with DM2 and overweight"@en ;
+        vocab:isSubGuidelineOf  :CIG-DB .
 
 :RecDB-Thiazolidinediones2
-        vocab:isPartOf  :CIG-DB .
+        vocab:isPartOf  :CIG-DB, :subCIG-Sulphonylureas1 .
+
+:subCIG-Sulphonylureas1  a    owl:NamedIndividual , vocab:subGuideline ;
+        rdfs:label              "first line oral treatment pathway for patients which are not overweight, or intolerant or contraindications for metformin "@en ;
+        vocab:isSubGuidelineOf  :CIG-DB .
 
 :RecDM-Thiazolidinediones3a  vocab:isPartOf  :CIG-DB .
 
+:subCIG-Sulphonylureas1  a    owl:NamedIndividual , vocab:subGuideline ;
+        rdfs:label              "first line oral treatment pathway for patients which are not overweight, or intolerant or contraindications for metformin "@en ;
+        vocab:isSubGuidelineOf  :CIG-DB .
+
 :RecDM-Thiazolidinediones3b  vocab:isPartOf  :CIG-DB .
 
-:RecDM-Thiazolidinediones3c  vocab:isPartOf  :CIG-DB .
+:subCIG-Sulphonylureas1  a    owl:NamedIndividual , vocab:subGuideline ;
+        rdfs:label              "first line oral treatment pathway for patients which are not overweight, or intolerant or contraindications for metformin "@en ;
+        vocab:isSubGuidelineOf  :CIG-DB .
 
 :RecDM-Thiazolidinediones3c  vocab:isPartOf  :CIG-DB .
+
+:subCIG-Sulphonylureas1  a    owl:NamedIndividual , vocab:subGuideline ;
+        rdfs:label              "first line oral treatment pathway for patients which are not overweight, or intolerant or contraindications for metformin "@en ;
+        vocab:isSubGuidelineOf  :CIG-DB .
+
+:RecDM-Thiazolidinediones3c  vocab:isPartOf  :CIG-DB .
+
+:subCIG-Sulphonylureas1  a    owl:NamedIndividual , vocab:subGuideline ;
+        rdfs:label              "first line oral treatment pathway for patients which are not overweight, or intolerant or contraindications for metformin "@en ;
+        vocab:isSubGuidelineOf  :CIG-DB .
 
 :RecDM-Thiazolidinediones3e  vocab:isPartOf  :CIG-DB .
 
+:subCIG-Sulphonylureas1  a    owl:NamedIndividual , vocab:subGuideline ;
+        rdfs:label              "first line oral treatment pathway for patients which are not overweight, or intolerant or contraindications for metformin "@en ;
+        vocab:isSubGuidelineOf  :CIG-DB .
+
 :RecDM-Thiazolidinediones4  vocab:isPartOf  :CIG-DB .
 
+:subCIG-Sulphonylureas1  a    owl:NamedIndividual , vocab:subGuideline ;
+        rdfs:label              "first line oral treatment pathway for patients which are not overweight, or intolerant or contraindications for metformin "@en ;
+        vocab:isSubGuidelineOf  :CIG-DB .
+
 :RecDM-Thiazolidinediones5  vocab:isPartOf  :CIG-DB .
+
+:subCIG-Sulphonylureas1  a    owl:NamedIndividual , vocab:subGuideline ;
+        rdfs:label              "first line oral treatment pathway for patients which are not overweight, or intolerant or contraindications for metformin "@en ;
+        vocab:isSubGuidelineOf  :CIG-DB .
 
 ## Recommendation
 :RecDB-Thiazolidinediones1 {

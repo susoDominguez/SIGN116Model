@@ -1,0 +1,73 @@
+[{ "parameter" : "primaryPreventionReview",
+  "description": "Considers type of diabetes, age and risk factors to personalize the continuous prevention therapy for diabetes",
+  "cigInvolved" : [ "CIG-DM" ],
+  "dataPaths" : [ {
+    "label" : "typeOfDM",
+    "Jpath" :  "context.diabetesAssessment.entry.resource[('439401001' in category.coding.code and 'http://snomed.info/sct' in category.coding.system) or (('problem-list-item' in category.coding.code  or 'encounter-diagnosis' in category.coding.code) and 'http://terminology.hl7.org/CodeSystem/condition-category' in category.coding.system)][('active' in clinicalStatus.coding.code or 'recurrence' in clinicalStatus.coding.code or 'relapse' in clinicalStatus.coding.code) and 'http://terminology.hl7.org/CodeSystem/condition-clinical' in clinicalStatus.coding.system][('confirmed' in verificationStatus.coding.code or 'provisional' in verificationStatus.coding.code) and 'http://terminology.hl7.org/CodeSystem/condition-ver-status' in verificationStatus.coding.system].code.coding[system='http://snomed.info/sct'].code",
+    "typeOf" : "string",
+    "required" : true },
+  { "label" : "riskFactors",
+    "Jpath" :  "context.riskFactor.entry.resource.code.coding[system='http://snomed.info/sct'].code",
+      "typeOf" : "string",
+      "required" : false },
+  { "label" : "age",
+    "Jpath" :  "context.birthDate",
+      "typeOf" : "date",
+      "required" : true }],
+  "actions" : [ {
+    "action" : "subClassOf",
+    "details" : {
+     "codeSystemId":"SNOMEDCT",
+     "outcomeListRef" : "dbType",
+     "dataPathsRef" : { 
+      "lhs":  "typeOfDB" ,
+      "rhs":null } } },
+  { "action" : "function",
+    "details" : {
+      "function_name" : "calculate_age",
+      "outcomeListRef" : null,
+      "dataPathsRef" : { 
+        "lhs":  "age" ,
+        "rhs":null } } },
+  { "action" : "comparison",
+    "details" : {
+      "compare" : "gt",
+      "outcomeListRef" : "age_threshold",
+      "dataPathsRef" : { 
+       "lhs":  "age" ,
+       "rhs":null } } },
+  { "action" : "subClassOF",
+    "details" : {
+      "codeSystemId":"SNOMEDCT",
+      "outcomeListRef" : "risk_factors",
+      "dataPathsRef" : { 
+        "lhs":  "risk_factors" ,
+        "rhs":null } } } ],
+  "constraints" : [ {"actionsRef":{
+    "typeOfDm" : "46635009",
+    "ageThreshold" :40 ,
+    "riskFactors" : null} ,
+    "outcome" : [ "subCIG-G1" ] },
+  { "actionsRef": { "typeOfDm" : "44054006", 
+    "ageThreshold" : 40 ,
+    "riskFactors" : "73211009"},
+    "outcome" : [ "subCIG-G2" ] } ]
+},
+{ "parameter" : "patientId",
+  "description": "finds FHIR patient identifier",
+  "cigInvolved" : [],
+  "dataPaths" : [ {
+    "label" : "patientId",
+    "Jpath" :  "context.patientId",
+    "typeOf" : "string",
+    "required" : true }], "actions":[],"constraints" : []},
+{ "parameter" : "encounterId",
+    "description": "finds FHIR encounter identifier",
+    "cigInvolved" : [],
+    "dataPaths" : [ {
+      "label" : "encounterId",
+      "Jpath" :  "context.encounterId",
+      "typeOf" : "string",
+      "required" : true }], "actions":[],"constraints" : []}
+
+]

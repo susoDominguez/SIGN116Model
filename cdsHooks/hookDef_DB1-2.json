@@ -2,82 +2,20 @@
     "hookInstance": "d1577c69-dfbe-44ad-ba6d-3e05e953b2ea",
     "hook": "diabetes-assess",
     "context": {
-      "birthDate": "1878-17-03",
-      "bodyHeight": {
-        "resourceType": "Observation",
-        "id": "heightMeasurement",
-        "status": "final",
-        "category": [
-          {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-                "code": "vital-signs",
-                "display": "Vital Signs"
-              }
-            ],
-            "text": "Vital Signs"
-          }
-        ],
-        "code": {
-          "coding": [
-            {
-              "system": "http://snomed.info/sct",
-              "code": "50373000",
-              "display": "Body height measure"
-            }
-          ]
-        },
-        "effectiveDateTime": "2021-09-02",
-        "valueQuantity": {
-          "value": 66.899999999999991,
-          "unit": "in",
-          "system": "http://unitsofmeasure.org",
-          "code": "[in_i]"
-        }
-      },
-      "bodyWeight": {
-        "resourceType": "Observation",
-        "id": "weightMeasurement",
-        "status": "final",
-        "category": [
-          {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-                "code": "vital-signs",
-                "display": "Vital Signs"
-              }
-            ],
-            "text": "Vital Signs"
-          }
-        ],
-        "code": {
-          "coding": [
-            {
-              "system": "http://snomed.info/sct",
-              "code": "363804004",
-              "display": "Body weight characteristic"
-            }
-          ]
-        },
-        "effectiveDateTime": "2021-09-02",
-        "valueQuantity": {
-          "value": 185,
-          "unit": "lbs",
-          "system": "http://unitsofmeasure.org",
-          "code": "[lb_av]"
-        }
-      },
+      "birthDate": "1988-17-03",
       "diabetesAssessment": {
         "resourceType": "Bundle",
         "entry": [
           {
             "resource": {
                 "resourceType": "Condition",
-                "id": "DB",
-                "clinicalStatus": "active",
-                "verificationStatus": "confirmed",
+                "id": "DM",
+                "clinicalStatus": { "coding": [
+                  { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                    "code": "active" } ] },
+                "verificationStatus": { "coding": [
+                  { "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                    "code": "confirmed" } ] },
                 "category": [
                     {
                       "coding": [
@@ -96,44 +34,10 @@
                   ],
                 "code": {
                     "coding": [{
-                        "system": "http://snomed.info/sct",
-                        "code": "46635009",
-                        "display": "Diabetes mellitus type 1"
-                    }]
-                },
-                "subject": {
-                    "reference": "Patient/1677163"
-                }
-            }
-          },
-          {
-            "resource": {
-                "resourceType": "Condition",
-                "id": "DB3",
-                "clinicalStatus": "active",
-                "verificationStatus": "confirmed",
-                "category": [
-                    {
-                      "coding": [
-                        {
-                          "system": "http://terminology.hl7.org/CodeSystem/condition-category",
-                          "code": "encounter-diagnosis",
-                          "display": "Encounter Diagnosis"
-                        },
-                        {
-                          "system": "http://snomed.info/sct",
-                          "code": "439401001",
-                          "display": "Diagnosis"
-                        }
-                      ]
-                    }
-                  ],
-                "code": {
-                    "coding": [{
-                        "system": "http://snomed.info/sct",
-                        "code": "385041000000108",
-                        "display": "Diabetes mellitus with multiple complications"
-                    }]
+                      "system": "http://snomed.info/sct",
+                      "code": "46635009",
+                      "display": "Diabetes mellitus type 1"
+                  }]
                 },
                 "subject": {
                     "reference": "Patient/1677163"
@@ -166,59 +70,19 @@
         {
           "resource": {
             "resourceType": "Condition",
-            "id": "metformin_contr",
+            "id": "microalb_DM_complication",
             "code": {
               "coding": [
                 {
                   "system": "http://snomed.info/sct",
-                  "code": "414677003",
-                  "display": "Metformin contraindicated"
+                  "code": "18521000119106",
+                  "display": "Microalbuminuria due to type 1 diabetes mellitus"
                 }
               ]
             },
             "subject": {
               "reference": "Patient/1677163"
             }
-          }
-        },
-        {
-          "resourceType": "AllergyIntolerance",
-          "id": "medication",
-          "clinicalStatus": {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
-                "code": "active",
-                "display": "Active"
-              }
-            ]
-          },
-          "verificationStatus": {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification",
-                "code": "unconfirmed",
-                "display": "Unconfirmed"
-              }
-            ]
-          },
-          "category": ["medication"],
-          "criticality": "high",
-          "code": {
-            "coding": [
-              {
-                "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                "code": "414678008",
-                "display": "Metformin not tolerated"
-              }
-            ]
-          },
-          "patient": {
-            "reference": "Patient/example"
-          },
-          "recordedDate": "2010-03-01",
-          "recorder": {
-            "reference": "Practitioner/13"
           }
         }
       ]

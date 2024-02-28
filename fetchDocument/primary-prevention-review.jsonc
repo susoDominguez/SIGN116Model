@@ -1,57 +1,25 @@
 [{ "parameter" : "primaryPreventionReview",
-  "description": "Considers type of diabetes, age and risk factors to personalize the continuous prevention therapy for diabetes",
+  "description": "Considers type of diabetes, age and risk factors of patient to personalize the continuous prevention therapy for diabetes",
   "cigInvolved" : [ "CIG-DM" ],
   "dataPaths" : [ {
-    "label" : "typeOfDM",
-    "Jpath" :  "context.diabetesAssessment.entry.resource[('439401001' in category.coding.code and 'http://snomed.info/sct' in category.coding.system) or (('problem-list-item' in category.coding.code  or 'encounter-diagnosis' in category.coding.code) and 'http://terminology.hl7.org/CodeSystem/condition-category' in category.coding.system)][('active' in clinicalStatus.coding.code or 'recurrence' in clinicalStatus.coding.code or 'relapse' in clinicalStatus.coding.code) and 'http://terminology.hl7.org/CodeSystem/condition-clinical' in clinicalStatus.coding.system][('confirmed' in verificationStatus.coding.code or 'provisional' in verificationStatus.coding.code) and 'http://terminology.hl7.org/CodeSystem/condition-ver-status' in verificationStatus.coding.system].code.coding[system='http://snomed.info/sct'].code",
-    "typeOf" : "string",
-    "required" : true },
-  { "label" : "riskFactors",
+    "label": "conditionsCodes", "description": "searches for snomed ct codes in FHIR condition resources with a clinical status that is either active, recurrent or relapse, that have been verified by clinical staff and that are part of a diagnosis",
+    "Jpath": "context.clinicalConditions.entry.resource[('439401001' in category.coding.code and 'http://snomed.info/sct' in category.coding.system) or (('problem-list-item' in category.coding.code  or 'encounter-diagnosis' in category.coding.code) and 'http://terminology.hl7.org/CodeSystem/condition-category' in category.coding.system)][('active' in clinicalStatus.coding.code or 'recurrence' in clinicalStatus.coding.code or 'relapse' in clinicalStatus.coding.code) and 'http://terminology.hl7.org/CodeSystem/condition-clinical' in clinicalStatus.coding.system][('confirmed' in verificationStatus.coding.code or 'provisional' in verificationStatus.coding.code) and 'http://terminology.hl7.org/CodeSystem/condition-ver-status' in verificationStatus.coding.system].code.coding[system='http://snomed.info/sct'].code","typeOf": "string","required": true },
+  { "label" : "riskFactors","description": "returns all recorded risk factors, otherwise null",
     "Jpath" :  "context.riskFactor.entry.resource.code.coding[system='http://snomed.info/sct'].code",
-      "typeOf" : "string",
-      "required" : false },
-  { "label" : "age",
-    "Jpath" :  "context.birthDate",
-      "typeOf" : "date",
-      "required" : true }],
-  "actions" : [ {
-    "action" : "subClassOf",
-    "details" : {
-     "codeSystemId":"SNOMEDCT",
-     "outcomeListRef" : "dbType",
-     "dataPathsRef" : { 
-      "lhs":  "typeOfDB" ,
-      "rhs":null } } },
-  { "action" : "function",
-    "details" : {
-      "function_name" : "calculate_age",
-      "outcomeListRef" : null,
-      "dataPathsRef" : { 
-        "lhs":  "age" ,
-        "rhs":null } } },
-  { "action" : "comparison",
-    "details" : {
-      "compare" : "gt",
-      "outcomeListRef" : "age_threshold",
-      "dataPathsRef" : { 
-       "lhs":  "age" ,
-       "rhs":null } } },
-  { "action" : "subClassOF",
-    "details" : {
-      "codeSystemId":"SNOMEDCT",
-      "outcomeListRef" : "risk_factors",
-      "dataPathsRef" : { 
-        "lhs":  "risk_factors" ,
-        "rhs":null } } } ],
-  "constraints" : [ {"actionsRef":{
-    "typeOfDm" : "46635009",
-    "ageThreshold" :40 ,
-    "riskFactors" : null} ,
-    "outcome" : [ "subCIG-G1" ] },
-  { "actionsRef": { "typeOfDm" : "44054006", 
-    "ageThreshold" : 40 ,
-    "riskFactors" : "73211009"},
-    "outcome" : [ "subCIG-G2" ] } ]
+    "typeOf" : "string","defaultVal": null,"required" : false },
+  { "label" : "age","Jpath": "context.birthDate","typeOf": "date","required" : true }],
+  "actions" : [ { "action" : "function", "details" : { "function_name" : "calculate_age", "arg1":"age" } },
+  { "action" : "comparison","details" : {"symbol" : "gte", "arg1" : "age", "arg2" : 40 } },
+  { "action" : "qomparison","details" : { "symbol" : "eq", "arg1" : "age", "arg2" : "ageThreshold" } },
+  { "action" : "filterByClass","details" : {"termSystem":"SCT","arg1" : "conditionsCodes","arg2" : ["73211009"] }},
+  { "action" : "isAOrEq","details" : {"termSystem":"SCT","arg1" : "conditionsCodes","arg2" : "typeOfDM" }},
+  { "action" : "anyElemIn","details" : {"arg1" : "riskFactors","arg2" : "riskFactors" } } ],
+  "constraints" : [ //below, typeOfDm = DM type 1
+  { "actionsRef":{ "typeOfDm" : "46635009", "ageThreshold" : true , "riskFactors" : []} ,
+      "output" : [ "DM-G1" ] },  //below, typeOfDm = DM type 1 without complications
+  { "actionsRef":{ "typeOfDm" : "313435000", "ageThreshold" : true , "riskFactors" : []} ,
+      "output" : [ "DM-G1" ] }, //below, typeOfDm = any type of DM || risk factors related to microalbuminuria
+  { "actionsRef": { "typeOfDm" : "73211009", "ageThreshold" : false , "riskFactors" : ["312975006","473111003","236499007"]}, "output" : [ "DM-G2" ] } ]
 },
 { "parameter" : "patientId",
   "description": "finds FHIR patient identifier",

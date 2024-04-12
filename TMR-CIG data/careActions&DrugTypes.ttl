@@ -1,4 +1,5 @@
 @prefix :      <http://anonymous.org/data/> .
+@prefix data:      <http://anonymous.org/data/> .
 @prefix np:    <http://www.nanopub.org/nschema#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
 @prefix swrl:  <http://www.w3.org/2003/11/swrl#> .
@@ -9,6 +10,7 @@
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml:   <http://www.w3.org/XML/1998/namespace> .
 @prefix vocab: <http://anonymous.org/vocab/> .
+@prefix tmr: <http://anonymous.org/vocab/> .
 @prefix nanopub: <http://www.nanopub.org/nschema#> .
 @prefix prov:  <http://www.w3.org/ns/prov#> .
 

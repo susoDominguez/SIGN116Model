@@ -15,8 +15,9 @@
 @prefix prov:  <http://www.w3.org/ns/prov#> .
 
 #    Action Types
-:DrugTPiaglitazone  a     vocab:DrugType , owl:NamedIndividual ;
-                          rdfs:label    "piaglitazone"@en . 
+:DrugTPioglitazone  a     vocab:DrugType , owl:NamedIndividual ;
+                          rdfs:label    "pioglitazone (substance)"@en . 
+                          vocab:snomedCode "395828009"
 
 :DrugTMetformin  a     vocab:DrugType , owl:NamedIndividual ;
                           rdfs:label    "metformin"@en . 
@@ -25,9 +26,9 @@
                           rdfs:label    "sulphonylureas"@en . 
 
 
-:ActAdministerPiaglitazone  rdf:type vocab:DrugAdministrationType;
-                            rdfs:label "Administer piaglitazone"@en ;
-                            vocab:administrationOf  :DrugTPiaglitazone .
+:ActAdministerPioglitazone  rdf:type vocab:DrugAdministrationType;
+                            rdfs:label "Administer pioglitazone"@en ;
+                            vocab:administrationOf  :DrugTPioglitazone .
 
 :ActAdministerMetformin  rdf:type vocab:DrugAdministrationType;
                          rdfs:label "Administer metformin"@en ;
